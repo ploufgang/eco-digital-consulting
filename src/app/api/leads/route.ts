@@ -2,6 +2,7 @@ import { leadSubmissionSchema, type LeadResponse } from "@/lib/lead-schema";
 import { checkRateLimit, fingerprint } from "@/lib/rate-limit";
 import { safeHttpUrl, siteUrl } from "@/lib/site-url";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
+import { NextResponse } from "next/dist/server/web/spec-extension/response";
 
 const MAX_BODY_BYTES = 16_384;
 
@@ -57,10 +58,10 @@ export async function POST(request: Request) {
     source: "website",
   }).select("id").single();
 
-  if (error || !data) {
-    console.error("Lead insertion failed", { code: error?.code });
-    return response({ ok: false, error: { code: "STORAGE_ERROR", message: "Nous n’avons pas pu enregistrer la demande. Réessayez ou contactez-nous par e-mail." } }, 503);
-  }
+  if (error) {
+  console.error("Détail complet de l'erreur Supabase :", JSON.stringify(error, null, 2));
+  return NextResponse.json({ error: error.message, details: error }, { status: 500 });
+}
 
   return response({ ok: true, leadId: data.id, calendarEnabled: Boolean(process.env.NEXT_PUBLIC_CALCOM_URL) }, 201);
 }
