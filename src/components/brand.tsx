@@ -1,0 +1,2 @@
+import Link from "next/link";
+export function Brand() { return <Link aria-label="EcoDigital Consulting — accueil" className="flex items-center gap-3" href="/"><span aria-hidden="true" className="relative grid size-9 place-items-center rounded-full border border-accent text-accent"><span className="h-4 w-px -rotate-45 bg-current" /><span className="absolute h-px w-4 -rotate-45 bg-current" /></span><span className="font-display text-xl font-semibold tracking-tight">EcoDigital</span></Link>; }

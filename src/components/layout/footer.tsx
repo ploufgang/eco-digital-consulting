@@ -1,0 +1,4 @@
+import Link from "next/link";
+import { Brand } from "@/components/brand";
+import { company } from "@/lib/company";
+export function Footer() { return <footer className="border-t border-border bg-surface py-12"><div className="container-shell grid gap-8 md:grid-cols-[1fr_auto] md:items-end"><div><Brand /><p className="mt-4 max-w-md text-sm leading-6 text-muted">{company.tagline} Conseil en Green IT, éco-conception logicielle et infrastructures sobres.</p></div><div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted"><Link className="hover:text-foreground" href="/mentions-legales">Mentions légales</Link><Link className="hover:text-foreground" href="/politique-confidentialite">Confidentialité</Link></div></div><p className="container-shell mt-8 border-t border-border pt-6 text-xs text-muted">© {new Date().getFullYear()} {company.legalName}. Site de démonstration.</p></footer>; }
