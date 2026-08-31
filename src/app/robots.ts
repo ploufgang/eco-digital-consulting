@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
-import { company } from "@/lib/company";
+import { absoluteSiteUrl, siteUrl } from "@/lib/site-url";
 
 export default function robots(): MetadataRoute.Robots {
-  return { rules: { userAgent: "*", allow: "/", disallow: "/api/" }, sitemap: `${company.siteUrl}/sitemap.xml`, host: company.siteUrl };
+  return { rules: { userAgent: "*", allow: "/", disallow: "/api/" }, sitemap: absoluteSiteUrl("/sitemap.xml"), host: siteUrl };
 }

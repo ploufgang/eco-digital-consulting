@@ -1,5 +1,6 @@
 import { leadSubmissionSchema, type LeadResponse } from "@/lib/lead-schema";
 import { checkRateLimit, fingerprint } from "@/lib/rate-limit";
+import { safeHttpUrl, siteUrl } from "@/lib/site-url";
 import { getSupabaseAdmin } from "@/lib/supabase-admin";
 
 const MAX_BODY_BYTES = 16_384;
@@ -12,9 +13,8 @@ export async function POST(request: Request) {
   const contentLength = Number(request.headers.get("content-length") ?? 0);
   if (contentLength > MAX_BODY_BYTES) return response({ ok: false, error: { code: "PAYLOAD_TOO_LARGE", message: "La demande est trop volumineuse." } }, 422);
 
-  const requestUrl = new URL(request.url);
-  const configuredOrigin = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? requestUrl.origin).origin;
-  const allowedOrigins = new Set([requestUrl.origin, configuredOrigin]);
+  const requestUrl = safeHttpUrl(request.url);
+  const allowedOrigins = new Set([requestUrl.origin, siteUrl]);
   const origin = request.headers.get("origin");
   if (origin && !allowedOrigins.has(origin)) return response({ ok: false, error: { code: "INVALID_ORIGIN", message: "Origine de la requête refusée." } }, 422);
 
