@@ -12,7 +12,7 @@ const manrope = localFont({ src: "./fonts/manrope-latin-wght-normal.woff2", vari
 const newsreader = localFont({ src: "./fonts/newsreader-latin-wght-normal.woff2", variable: "--font-newsreader", display: "swap", weight: "200 800" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(company.siteUrl),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || company.siteUrl || "http://localhost:3000"),
   title: { default: `${company.name} | Numérique responsable`, template: `%s | ${company.name}` },
   description: "Conseil en Green IT, éco-conception logicielle et optimisation d’infrastructures pour réduire coûts et empreinte environnementale.",
   applicationName: company.name,
